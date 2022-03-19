@@ -1,0 +1,129 @@
+<html>
+
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/luxon@1.16.0/build/global/luxon.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+    <script src="moment.js"></script>
+    <script src="moment-timezone-with-data-10-year-range.js"></script>    
+   <script>
+
+    //const DateTime = luxon.DateTime; // anytime you use DateTime, it means luxon's DateTime
+
+    /* const dt = DateTime.fromISO('2019-07-09T18:45', {zone: 'America/Chicago'});
+    console.log(dt.toISO());
+    */
+</script>
+
+    
+
+   
+</head>
+
+<body>
+    <label for="starting-area">Choose the continent/area that your starting time zone is in:</label>
+    <select name = "starting-area" id="starting-area">
+        <!-- populated by options.js -->
+    </select>
+    
+
+    <label for="input-time-zones">Choose a Starting Time Zone:</label>
+    <select name="input-time-zones" id="input-time-zones">
+    </select> 
+
+    
+
+    <input type="date" id="dateInput">
+    <input type="time" id="timeInput">
+
+    
+   
+    <button onclick="convertTime()">Convert Time</button>
+
+
+    <label for="ending-area">Choose the continent/area that your destination time zone is in:</label>
+    <select name = "ending-area" onchange='notify();''; id="ending-area">
+        <!-- populated by options.js -->
+    </select>
+
+    <label for="dest-time-zones">Choose a Destination Time Zone:</label>
+    <select name="dest-time-zones" id="dest-time-zones">
+    </select> 
+    
+
+    <script type="text/javascript" src="options.js">
+        
+    </script>
+    
+    <script>
+
+        
+
+        function convertTime() {
+            console.log("test");
+            
+            // get date values from date input
+            var input = document.getElementById('dateInput').value;
+
+            /*
+            var splitDate = input.split("-");
+            var year = splitDate[0]; // year
+            var month = splitDate[1]; // month
+            var day = splitDate[2]; // day
+            */
+            
+            // get time values from time input
+            var timeInput = document.getElementById('timeInput').value;
+            /*
+            var splitTime = timeInput.split(":"); // array 
+            var hours = splitTime[0]; // hours
+            var minutes = splitTime[1]; //minutes
+            */
+
+            
+            // get starting timeZone from time zone input
+            let initTzSel = selector;
+            let destTzSel = dstSelector;
+            let initialTimeZone = initTzSel.options[initTzSel.selectedIndex].text; // time zone
+            let destTimeZone = destTzSel.options[destTzSel.selectedIndex].text;
+           
+
+            var c = moment.tz(input + " " + timeInput, initialTimeZone);
+            console.log(initialTimeZone + ": " + c.format());
+            const DateTime = luxon.DateTime;
+            var dt = DateTime.fromISO(c.format()); // creates DateTime object in luxon 
+            
+           
+             // setting time zone first to initial bc by default it's not set
+            //dt = dt.setZone(initialTimeZone);
+            //console.log(dt.toLocaleString(DateTime.DATETIME_FULL));
+           
+
+            // destination time: ISO 
+            dt = dt.setZone(destTimeZone); // set dest time zone to the time zone selected by user in dest dropdown
+            console.log(destTimeZone + ": " + dt.toISO({suppressMilliseconds: true}));
+
+            // human readable format 
+            console.log(destTimeZone + ": " + dt.toLocaleString(DateTime.DATETIME_FULL));
+            // create DateTime from values entered in input fields 
+            
+        
+            /*
+            const DateTime = luxon.DateTime;
+            dt = DateTime.fromObject({year: year, month: month, day: day, hour: hours, minute: minutes}, {timeZone: initialTimeZone});
+            console.log(initialTimeZone + ": " + dt.toISO());
+        
+            */
+            
+
+        }
+        
+     
+
+
+    </script> 
+    
+   
+   
+</body>
+
+</html>

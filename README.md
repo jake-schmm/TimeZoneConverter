@@ -4,4 +4,4 @@ The project is comprised of two files:
 - options.js - for adding options of time zones to the dropdowns via JavaScript (rather than adding <option> to each <select> element in HTML) 
   
   There is a YouTube video associated with this project that shows how to build it, which I will upload soon.
-  Coming soon: <YouTube video>
+  Coming soon: YouTube Video

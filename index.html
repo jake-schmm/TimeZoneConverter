@@ -1,85 +1,135 @@
 <html>
 
 <head>
-    <script src="https://cdn.jsdelivr.net/npm/luxon@1.16.0/build/global/luxon.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
     <script src="moment.js"></script>
     <script src="moment-timezone-with-data-10-year-range.js"></script>    
-   <script>
+    <script src="https://cdn.jsdelivr.net/npm/luxon@1.16.0/build/global/luxon.js"></script>
+<style>
 
-    //const DateTime = luxon.DateTime; // anytime you use DateTime, it means luxon's DateTime
+    body {
+        background-image: linear-gradient(360deg,#383836 10%,#4a4a4a 360%);
+    }
 
-    /* const dt = DateTime.fromISO('2019-07-09T18:45', {zone: 'America/Chicago'});
-    console.log(dt.toISO());
-    */
-</script>
+    .container {
+        position:relative; 
+        transform: translate(1%, 30%);
+    }
 
+    .outerColumn {
+        width: 33%; 
+    }
+
+    .innerColumn {
+        width: 33%; 
+    }
+
+    .innerColumn button {
+        position: relative;
+        top: 25%;
+        left: 31.5%;
+       
+        border: 1px solid black;
+    }
+
+    .card-title {
+        font-family: 'Playfair Dissplay', serif;
+        font-size: 24px;
+    }
+    select {
+        position: relative;
+        left: 1%;
+        border: 1px solid gray;
+    }
+
+    input {
+        border: 1px solid gray;
+    }
     
+   @import url('https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap');
 
-   
+</style>
+    
+<link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.10.2/mdb.min.css" rel="stylesheet">
+
 </head>
 
 <body>
-    <label for="starting-area">Choose the continent/area that your starting time zone is in:</label>
-    <select name = "starting-area" id="starting-area">
-        <!-- populated by options.js -->
-    </select>
-    
+    <div class="container">
+    <div class="row">
+        <div class="outerColumn col-sm card">
+            <div class="card-title">
+                Starting Point
+            </div>
+            
+            <div class="card-body">
+            <label for="starting-area">Choose the continent/area that your starting time zone is in:</label>
+            <select name = "starting-area" onchange="resetStartTzDropdown();" id="starting-area">
+                <!-- populated by options.js -->
+            </select>
+            
+            <br>
+            <br>
+            <label for="input-time-zones">Choose a Starting Time Zone:</label>
 
-    <label for="input-time-zones">Choose a Starting Time Zone:</label>
-    <select name="input-time-zones" id="input-time-zones">
-    </select> 
+            <select name="input-time-zones" id="input-time-zones">
+            </select> 
 
-    
+            <br>
+            <br>
+            <label for="dateInput">Date: </label>
+            <input type="date" id="dateInput">
 
-    <input type="date" id="dateInput">
-    <input type="time" id="timeInput">
+            <br>
+            <br>
+            <label for="timeInput">Time: </label>
+            <input type="time" id="timeInput">
 
-    
-   
-    <button onclick="convertTime()">Convert Time</button>
+        </div>   <!-- card body -->
+        </div> <!-- end of column -->
+        
+
+        <div class="innerColumn col-sm">
+            <button class="btn btn-success" onclick="convertTime()">Convert Time <br><b>></b></button>
+        </div>
 
 
-    <label for="ending-area">Choose the continent/area that your destination time zone is in:</label>
-    <select name = "ending-area" onchange='notify();''; id="ending-area">
-        <!-- populated by options.js -->
-    </select>
+        <div class="outerColumn col-sm card">
+            <div class="card-title">
+                Ending Point
+            </div>
+            <div class="card-body">
+            <label for="ending-area">Choose the continent/area that your destination time zone is in:</label>
+            <select name = "ending-area" onchange='resetDestTzDropdown();' id="ending-area">
+                <!-- populated by options.js -->
+            </select>
+            <br>
+            <br>
+            <label for="dest-time-zones">Choose a Destination Time Zone:</label>
+            <select name="dest-time-zones" id="dest-time-zones">
+            </select> 
 
-    <label for="dest-time-zones">Choose a Destination Time Zone:</label>
-    <select name="dest-time-zones" id="dest-time-zones">
-    </select> 
-    
+            <br>
+            <br>
+            <label for="result">Result:</label>
+            <output id="result"></output>
+            </div> <!-- card-body -->
+            </div> <!-- column 3 -->
+        </div>
+    </div>
 
     <script type="text/javascript" src="options.js">
-        
     </script>
     
     <script>
-
-        
-
         function convertTime() {
-            console.log("test");
-            
             // get date values from date input
             var input = document.getElementById('dateInput').value;
 
-            /*
-            var splitDate = input.split("-");
-            var year = splitDate[0]; // year
-            var month = splitDate[1]; // month
-            var day = splitDate[2]; // day
-            */
-            
             // get time values from time input
             var timeInput = document.getElementById('timeInput').value;
-            /*
-            var splitTime = timeInput.split(":"); // array 
-            var hours = splitTime[0]; // hours
-            var minutes = splitTime[1]; //minutes
-            */
+           
 
-            
             // get starting timeZone from time zone input
             let initTzSel = selector;
             let destTzSel = dstSelector;
@@ -92,11 +142,7 @@
             const DateTime = luxon.DateTime;
             var dt = DateTime.fromISO(c.format()); // creates DateTime object in luxon 
             
-           
-             // setting time zone first to initial bc by default it's not set
-            //dt = dt.setZone(initialTimeZone);
-            //console.log(dt.toLocaleString(DateTime.DATETIME_FULL));
-           
+
 
             // destination time: ISO 
             dt = dt.setZone(destTimeZone); // set dest time zone to the time zone selected by user in dest dropdown
@@ -106,15 +152,10 @@
             console.log(destTimeZone + ": " + dt.toLocaleString(DateTime.DATETIME_FULL));
             // create DateTime from values entered in input fields 
             
-        
-            /*
-            const DateTime = luxon.DateTime;
-            dt = DateTime.fromObject({year: year, month: month, day: day, hour: hours, minute: minutes}, {timeZone: initialTimeZone});
-            console.log(initialTimeZone + ": " + dt.toISO());
-        
-            */
-            
-
+            console.log("Hello");
+            // show result
+            document.getElementById('result').innerHTML = dt.toLocaleString(DateTime.DATETIME_FULL);
+          
         }
         
      

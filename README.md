@@ -5,4 +5,4 @@ The project is comprised of two files:
 - moment.js and moment-timezone-with-data-10-year-range.js: these are scripts for moment.js library, required for inclusion in order to use moment.tz function in code 
   
   There is a YouTube video associated with this project that shows how to build it, which I will upload soon.
-  Coming soon: YouTube Video
+  YouTube video: https://youtu.be/5rDZIS8f4PQ
